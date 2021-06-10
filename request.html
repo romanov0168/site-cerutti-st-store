@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <title>Форма заявки с сайта</title>
+</head>
+
+<body>
+    <?php
+//проверяем, существуют ли переменные в массиве POST
+if(!isset($_POST['name']) and !isset($_POST['email']) and !isset($_POST['tel']) and !isset($_POST['message'])){
+ ?>
+    <form action="request.php" method="post">
+        <input class="name" type="text" name="name" placeholder="Имя" required>
+        <input class="email" type="email" name="email" placeholder="E-mail" required>
+        <input class="tel" type="tel" name="tel" placeholder="Телефон" required>
+        <textarea class="text-area" cols="30" row="5" name="message" placeholder="Пожелания" required></textarea>
+        <input type="submit" value="Отправить">
+    </form>
+    <?php
+} else {
+ //показываем форму
+ $name = $_POST['name'];
+ $email = $_POST['email'];
+ $tel = $_POST['tel'];
+ $message = $_POST['message'];
+ $name = htmlspecialchars($name);
+ $email = htmlspecialchars($email);
+ $tel = htmlspecialchars($tel);
+ $message = htmlspecialchars($message);
+ $name = urldecode($name);
+ $email = urldecode($email);
+ $tel = urldecode($tel);
+ $message = urldecode($message);
+ $name = trim($name);
+ $email = trim($email);
+ $tel = trim($tel);
+ $message = trim($message);
+if (mail("anya87707@mail.ru", "Заявка с сайта", "Имя:".$name.". E-mail: ".$email ,"From: anya87707@u333167.s28.wh1.ru \r\n"))
+ {     echo "Успешно отправлено"; 
+} else { 
+    echo "При отправке возникла ошибка";
+ }
+}
+    
+ini_set('display_errors','On');
+error_reporting('E_ALL');
+    
+?>
+</body>
+
+</html>
